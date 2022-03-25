@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill'
 import clearAllCookiesFromDomain from './cookie'
-import reloadTabsIfExist from './tab'
+// import reloadTabsIfExist from './tab'
 
 interface ContentScriptMessage {
   type: string

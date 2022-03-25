@@ -6,6 +6,12 @@ import {
   handleCookieChanged
 } from './utils/handlers'
 
+declare global {
+  interface Window {
+    browser: typeof browser
+  }
+}
+
 window.browser = browser
 
 // Listen for click event
