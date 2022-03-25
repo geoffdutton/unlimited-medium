@@ -1,9 +1,9 @@
 import browser from 'webextension-polyfill'
 import {
-    handleInstalled,
-    handleMessage,
-    handleBrowserActionClick,
-    handleCookieChanged
+  handleInstalled,
+  handleMessage,
+  handleBrowserActionClick,
+  handleCookieChanged
 } from './utils/handlers'
 
 window.browser = browser
