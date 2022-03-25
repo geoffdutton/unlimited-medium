@@ -2,6 +2,14 @@ import browser from 'webextension-polyfill'
 import clearAllCookiesFromDomain from './cookie'
 import reloadTabsIfExist from './tab'
 
+interface ContentScriptMessage {
+  type: string
+  data: {
+    domain: string
+    url: string
+  }
+}
+
 // Handle onInstalledEvent
 const handleInstalled = async () => {
   // Refresh everything on first install (or refresh)
@@ -14,7 +22,10 @@ const handleInstalled = async () => {
 }
 
 // Handle incoming messages
-const handleMessage = async (request, sender) => {
+const handleMessage = async (
+  request: ContentScriptMessage,
+  sender: browser.Runtime.MessageSender
+) => {
   // Found a medium blog
   console.log({ request, sender })
   if (request.type === 'medium-blog') {
@@ -32,7 +43,7 @@ const handleBrowserActionClick = async () => {
   const domains = Object.keys(storedBlogs)
 
   if (domains.length > 0) {
-    for (let storedBlog in storedBlogs) {
+    for (const storedBlog in storedBlogs) {
       // clear cookies for domain
       await clearAllCookiesFromDomain(storedBlog, storedBlogs[storedBlog])
       console.log(`Cleared cookies from ${storedBlog}`)
@@ -44,7 +55,9 @@ const handleBrowserActionClick = async () => {
   }
 }
 
-const handleCookieChanged = async (changeInfo) => {
+const handleCookieChanged = async (
+  changeInfo: browser.Cookies.OnChangedChangeInfoType
+) => {
   if (
     changeInfo.cookie.domain.includes('medium.com') ||
     changeInfo.cookie.domain.includes('towardsdatascience.com')
