@@ -1,6 +1,9 @@
 {
-    "editor.formatOnSave": true,
-    // Default (format when you paste)
-    "editor.formatOnPaste": true,
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  // Default (format when you paste)
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.probe": ["javascript", "typescript"],
+  "editor.formatOnSave": false,
+  // Runs Prettier, then ESLint
+  "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"]
 }
