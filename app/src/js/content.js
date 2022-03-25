@@ -28,6 +28,8 @@ window.addEventListener("load", () => {
             type: "medium-blog",
             data: { domain: window.location.host, url: window.location.origin },
         });
+        window.localStorage.clear();
+        window.sessionStorage.clear();
     } else {
         console.log("Not a medium blog :( ");
         browser.runtime.sendMessage({ type: "not-medium-blog" });

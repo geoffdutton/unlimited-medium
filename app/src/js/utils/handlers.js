@@ -6,15 +6,17 @@ import reloadTabsIfExist from "./tab";
 const handleInstalled = async () => {
     // Refresh everything on first install (or refresh)
     // To inject the content script
-    const allTabs = await browser.tabs.query({});
-    for await (const tab of allTabs) {
-        browser.tabs.reload(tab.id);
-    }
+    console.log('handleInstalled')
+    // const allTabs = await browser.tabs.query({});
+    // for await (const tab of allTabs) {
+    //     browser.tabs.reload(tab.id);
+    // }
 };
 
 // Handle incoming messages
 const handleMessage = async (request, sender) => {
     // Found a medium blog
+    console.log({ request, sender })
     if (request.type === "medium-blog") {
         // Store the infos locally
         await browser.storage.local.set({
@@ -36,12 +38,19 @@ const handleBrowserActionClick = async () => {
                 storedBlog,
                 storedBlogs[storedBlog]
             );
+            console.log(`Cleared cookies from ${storedBlog}`)
         }
-        // clear my local storage
-        await browser.storage.local.clear();
-        // reload all stored pages
-        await reloadTabsIfExist(domains);
+        // // clear my local storage
+        // await browser.storage.local.clear();
+        // // reload all stored pages
+        // await reloadTabsIfExist(domains);
     }
 };
 
-export { handleInstalled, handleMessage, handleBrowserActionClick };
+const handleCookieChanged = async (changeInfo) => {
+    if (changeInfo.cookie.domain.includes('medium.com') || changeInfo.cookie.domain.includes('towardsdatascience.com')) {
+        console.log({ changeInfo })
+    }
+};
+
+export { handleInstalled, handleMessage, handleBrowserActionClick, handleCookieChanged };
