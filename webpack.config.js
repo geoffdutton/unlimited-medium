@@ -9,8 +9,8 @@ const __app_dirname = (subdir) => __dirname + '/app/' + subdir
 module.exports = {
   devtool: 'inline-source-map',
   entry: {
-    content: path.resolve(__app_dirname('src/js'), 'content.js'),
-    background: path.resolve(__app_dirname('src/js'), 'background.js')
+    content: path.resolve(__app_dirname('src/js'), 'content.ts'),
+    background: path.resolve(__app_dirname('src/js'), 'background.ts')
   },
 
   output: {
